@@ -5,8 +5,7 @@ document.getElementById('bank-info').style.display = 'none';
 document.getElementById('example-card-numbers').style.display = 'none';
 
 const chargify = new Chargify();
-
-
+const context = localStorage.getItem('context');
 
 chargify.load({
     // selector where the iframe will be included in the host's HTML (i.e. '#chargify-form')
@@ -14,7 +13,7 @@ chargify.load({
     selector: '#chargify-form',
 
     // (i.e. '1a2cdsdn3lkn54lnlkn')
-    publicKey: 'MY_PUBLIC_KEY',
+    publicKey: localStorage.getItem(`${context}publicKey`),
 
     type: 'direct_debit',
 
@@ -22,8 +21,8 @@ chargify.load({
 
     currency: 'CAD',
 
-    serverHost: 'https://payments-svr.maxio.com', // payment service
-    securityToken: 'your_security_token',
+    serverHost: localStorage.getItem(`${context}serverHost`),
+    securityToken: localStorage.getItem(`${context}securityToken`),
     fields: {
         firstName: {
             selector: '#chargify-form',
