@@ -9,18 +9,21 @@ const TRANSACTION_AMOUNT = '1000';
 const surchargeState = {
   addressFields: null,
   cardDetails: null,
+  requestId: 0,
 
   fetchPreview: function() {
     const address = this.addressFields;
     const card = this.cardDetails;
 
     if (!address || !address.state || !address.country || !card || !card.funding_source) {
+      this.requestId++;
       const el = document.getElementById('surcharge-notice');
       el.textContent = '';
       el.style.display = 'none';
       return;
     }
 
+    const currentRequestId = ++this.requestId;
     const serverHost = localStorage.getItem(`${context}serverHost`);
 
     fetch(`${serverHost}/surcharging/preview`, {
@@ -37,6 +40,7 @@ const surchargeState = {
     })
       .then(res => res.json())
       .then(data => {
+        if (currentRequestId !== surchargeState.requestId) return;
         const percentage = parseFloat(data.percentage);
         const el = document.getElementById('surcharge-notice');
         if (percentage > 0) {
