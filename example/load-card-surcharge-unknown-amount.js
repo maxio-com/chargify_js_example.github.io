@@ -11,8 +11,12 @@ const surchargeState = {
     const address = this.addressFields;
     const card = this.cardDetails;
 
-    if (!address || !address.state || !address.country) return;
-    if (!card || !card.funding_source) return;
+    if (!address || !address.state || !address.country || !card || !card.funding_source) {
+      const el = document.getElementById('surcharge-notice');
+      el.textContent = '';
+      el.style.display = 'none';
+      return;
+    }
 
     const serverHost = localStorage.getItem(`${context}serverHost`);
 
