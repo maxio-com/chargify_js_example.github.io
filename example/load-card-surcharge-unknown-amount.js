@@ -3,10 +3,18 @@ document.getElementById('bank-info').style.display = 'none';
 const chargify = new Chargify();
 const context = localStorage.getItem('context');
 
+const DEBOUNCE_MS = 300;
+
 const surchargeState = {
   addressFields: null,
   cardDetails: null,
   requestId: 0,
+  debounceTimer: null,
+
+  debouncedFetchPreview: function() {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => this.fetchPreview(), DEBOUNCE_MS);
+  },
 
   fetchPreview: function() {
     const address = this.addressFields;
@@ -136,10 +144,10 @@ chargify.load({
 }, {
   onAddressChange: function(data) {
     surchargeState.addressFields = data.addressFields;
-    surchargeState.fetchPreview();
+    surchargeState.debouncedFetchPreview();
   },
   onCardDetailsChange: function(cardDetails) {
     surchargeState.cardDetails = cardDetails;
-    surchargeState.fetchPreview();
+    surchargeState.debouncedFetchPreview();
   },
 });
