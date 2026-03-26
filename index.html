@@ -26,6 +26,8 @@
         <option value="load-card-dropdowns">Card dropdowns</option>
         <option value="load-card-full">Card full</option>
         <option value="load-card-full-default-error-messages">Card full(default error messages)</option>
+        <option value="load-card-surcharge-unknown-amount">Card surcharge (without a known amount)</option>
+        <option value="load-card-surcharge-known-amount">Card surcharge (with a known amount - $1,000)</option>
         <option value="load-3ds-card-minimal">3DS card minimal</option>
         <option value="load-bank-minimal">Bank minimal</option>
         <option value="load-bank-full">Bank full</option>
@@ -82,6 +84,8 @@
 
       <div id="plaid-link" style="height: 30px; margin: 10px 0"></div>
 
+      <p id="surcharge-notice" style="display:none; color: #d35400; font-weight: bold; margin: 10px 0;"></p>
+
       <div id="error-messages"></div>
 
       <label>
@@ -95,7 +99,7 @@
       <p>Handy credit card number examples:</p>
       visa: 4111111111111111 <br />
       amex: 371449635398431 <br />
-      master: 5555555555554444 <br />
+      master: 5555555555554444, exp: 03/30, CVV: 737 - eligible for surcharge <br />
       3ds: 4000000000001091 <br />
       3ds (Wincave): 5453010000095323, password: secone1
     </div>
